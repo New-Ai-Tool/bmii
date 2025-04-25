@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern BMI Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+        }
+
+        .calculator {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .ad-placeholder {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #666;
+            border: 2px dashed #ddd;
+        }
+
+        h1 {
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #764ba2;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            display: none;
+        }
+
+        .bmi-value {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .ad-placeholder {
+                height: 200px;
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <main class="calculator">
+            <h1>BMI Calculator</h1>
+            
+            <div class="input-group">
+                <label for="weight">Weight (kg)</label>
+                <input type="number" id="weight" placeholder="Enter weight in kilograms">
+            </div>
+
+            <div class="input-group">
+                <label for="height">Height (cm)</label>
+                <input type="number" id="height" placeholder="Enter height in centimeters">
+            </div>
+
+            <button onclick="calculateBMI()">Calculate BMI</button>
+
+            <div class="result" id="result">
+                <div class="bmi-value" id="bmiValue">0</div>
+                <div id="bmiCategory" class="bmi-category">Normal Weight</div>
+            </div>
+        </main>
+
+        <!-- Ad placeholder 1 -->
+        <div class="ad-placeholder">
+            Advertisement (300x600)
+        </div>
+
+        <!-- Ad placeholder 2 (mobile-friendly) -->
+        <div class="ad-placeholder" style="display: none;">
+            Advertisement (320x100)
+        </div>
+    </div>
+
+    <script>
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value) / 100; // Convert cm to m
+            
+            if (isNaN(weight) || isNaN(height) || height === 0) {
+                alert('Please enter valid weight and height');
+                return;
+            }
+
+            const bmi = weight / (height * height);
+            const result = document.getElementById('result');
+            const bmiValue = document.getElementById('bmiValue');
+            const bmiCategory = document.getElementById('bmiCategory');
+
+            bmiValue.textContent = bmi.toFixed(1);
+            
+            let category = '';
+            let color = '';
+            
+            if (bmi < 18.5) {
+                category = 'Underweight';
+                color = '#f6e05e';
+            } else if (bmi < 25) {
+                category = 'Normal Weight';
+                color = '#48bb78';
+            } else if (bmi < 30) {
+                category = 'Overweight';
+                color = '#f6ad55';
+            } else {
+                category = 'Obese';
+                color = '#f56565';
+            }
+
+            bmiCategory.textContent = category;
+            result.style.display = 'block';
+            result.style.backgroundColor = color + '20';
+            result.style.color = color;
+        }
+    </script>
+</body>
+</html>
